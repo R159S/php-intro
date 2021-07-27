@@ -1,5 +1,7 @@
 <?php 
     
+    session_start();
+
     $categorias = [];
     $categorias[] = "infantil";
     $categorias[] = "adolescentes";
@@ -10,45 +12,61 @@
     $idade = $_POST['idade'];
 
     if(empty($nome)){
-        echo 'O nome não pode ser vazio!';
+        $_SESSION['mensagem-de-erro'] = 'O nome não pode ser vazio, por favor, preencha-o novamente!';
+        header('location: index.php');
         return;
     } else 
 
     if(strlen($nome) < 3){
-        echo 'O nome deve conter mais de 3 caracteres!';
+        $_SESSION['mensagem-de-erro'] = 'O nome não pode conter menos de 3 caracteres!';
+        header('location: index.php');
         return;
-    }
+    } else
 
     if(strlen($nome) > 40){
-        echo 'O nome é muito extenso!';
+        $_SESSION['mensagem-de-erro'] = 'O nome não pode conter mais de 40 caracteres!';
+        header('location: index.php');
         return;
-    }
+    } else
 
     if(!is_numeric($idade)){
-        echo 'Informe um numero para idade!';  
+        $_SESSION['mensagem-de-erro'] = 'Informe um numero para idade!';
+        header('location: index.php');
         return;
-    }
+    } 
 
     if($idade >=6 && $idade <= 12){
 
         for($i = 0; $i < count($categorias); $i++){
-            if($categorias[$i] == 'infantil')
-                echo "O nadador, ",$nome, ", compete na categoria ".$categorias[$i];
+            if($categorias[$i] == 'infantil'){
+                $_SESSION['mensagem-de-sucesso'] = "O nadador, ".$nome.", compete na categoria ".$categorias[$i];
+                header('location: index.php');
+                return;
+            }
+            
         }
 
     }
     else if($idade >= 13 && $idade <= 18){
 
         for($i = 0; $i < count($categorias); $i++){
-            if($categorias[$i] == 'adolescentes')
-                echo "O nadador, ",$nome, ", compete na categoria ".$categorias[$i];
+            if($categorias[$i] == 'adolescentes'){
+                $_SESSION['mensagem-de-sucesso'] = "O nadador, ".$nome.", compete na categoria ".$categorias[$i];
+                header('location: index.php');
+                return;
+            }
+            
         }
     }
     else {
 
         for($i = 0; $i < count($categorias); $i++){
-            if($categorias[$i] == 'adultos')
-                echo "O nadador, ",$nome, ", compete na categoria ".$categorias[$i];
+            if($categorias[$i] == 'adultos'){
+                $_SESSION['mensagem-de-sucesso'] = "O nadador, ".$nome.", compete na categoria ".$categorias[$i];
+                header('location: index.php');
+                return;
+            }
+            
         }
     }
 ?>
